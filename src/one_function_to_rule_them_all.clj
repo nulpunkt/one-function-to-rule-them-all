@@ -26,7 +26,7 @@
     (concat (take-while larger-than-n sorted-seq) [n] (drop-while larger-than-n sorted-seq))))
 
 (defn insertion-sort [a-seq]
-  [:-])
+  (reduce (fn [sorted e] (insert sorted e)) [] a-seq))
 
 (defn parity [a-seq]
   [:-])
