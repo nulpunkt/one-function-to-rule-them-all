@@ -46,5 +46,14 @@
 (defn pred-and [& preds]
   (fn [x] (reduce (fn [init p] (and init (p x))) true preds)))
 
-(defn my-map [f a-seq]
-  [:-])
+(defn my-map [f & seqs]
+  (cond
+    (= 1 (count seqs))
+      ; One sequence with elemnts is easy
+      (reduce (fn [r x] (concat r [(f x)])) '() (first seqs))
+    (true? (reduce (fn [acc e] (and acc (empty? e))) true seqs))
+      ; A list of sequences with empty sequences is easy
+      '()
+    :else
+      ; Grab all the first elements and apply the function to them, grab the rest of the subsequeces, and recurse
+      (concat [(apply f (my-map first seqs))] (apply my-map f (my-map rest seqs)))))
