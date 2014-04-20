@@ -29,7 +29,8 @@
   (reduce (fn [sorted e] (insert sorted e)) [] a-seq))
 
 (defn parity [a-seq]
-  [:-])
+  (let [toggle (fn [a-set e] (if (contains? a-set e) (disj a-set e) (conj a-set e)))]
+    (reduce toggle #{} a-seq)))
 
 (defn minus [x]
   :-)
